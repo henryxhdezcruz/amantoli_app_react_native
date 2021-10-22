@@ -7,8 +7,13 @@ import colors from "../../styles/colors";
 import SelectDropdown from 'react-native-select-dropdown'
 
 export default function Quantity(props) {
-  const { quantity, setQuantity } = props;
-  const countries = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
+  const { stock, setSelectionQuantity } = props;
+
+  function range(start, end) {
+    return Array(end - start + 1).fill().map((_, idx) => start + idx);
+  }
+  stockint = parseInt(stock);
+  var arr = range(1, stockint);
 
   const renderIcon = () => {
     return (
@@ -17,42 +22,18 @@ export default function Quantity(props) {
   }
 
   return (
-    <View /*style={{ zIndex: 2 }}*/ >
-      {/* <DropDownPicker
-        items={[
-          {
-            label: "1",
-            value: 1,
-          },
-          {
-            label: "2",
-            value: 2,
-          },
-          {
-            label: "3",
-            value: 3,
-          },
-        ]}
-        defaultValue={quantity}
-        containerStyle={styles.containerStyle}
-        itemStyle={styles.itemStyle}
-        dropDownStyle={styles.dropDownPicker}
-        style={styles.dropDownPicker}
-        labelStyle={styles.labelStyle}
-        onChangeItem={(item) => setQuantity(item.value)}
-      /> */}
-
+    <View>
       <SelectDropdown
         defaultValueByIndex={0}
         renderDropdownIcon={renderIcon}
-        data={countries}
+        data={arr}
         buttonStyle={styles.button}
         rowTextStyle={styles.buttonTextStyle}
         rowStyle={styles.dropDownPicker}
         buttonTextStyle={styles.buttonTextStyle}
         dropDownStyle={styles.dropDownPicker}
         onSelect={(selectedItem, index) => {
-          console.log(selectedItem, index)
+          setSelectionQuantity(selectedItem);
         }}
         buttonTextAfterSelection={(selectedItem, index) => {
           return selectedItem
@@ -61,7 +42,6 @@ export default function Quantity(props) {
           return item
         }}
       />
-
     </View>
   );
 }
@@ -86,7 +66,6 @@ const styles = StyleSheet.create({
     color: colors.fontBlack,
   },
   button: {
-    //backgroundColor: colors.bgwhite,
     borderRadius: 5,
     width: 100,
     paddingLeft: 15,

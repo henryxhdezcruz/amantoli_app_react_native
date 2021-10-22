@@ -9,6 +9,7 @@ import ProductStack from "./ProductStack"
 import AddressStack from './AddressStack';
 import Favorites from "../screens/Favorites"
 import Categories from '../screens/Categories';
+import Terms from '../screens/TermsAndConditions';
 import s from '../styles/style';
 import { Icon } from 'react-native-elements'
 import { Alert } from 'react-native'
@@ -101,7 +102,7 @@ function Menu(props) {
             </View>
             <View style={s.bgContainerLine}>
                 <DrawerMenu iconName='question-circle' titleName='Ayuda' />
-                <DrawerMenu iconName='file' titleName='Terminos y condiciones' />
+                <DrawerMenu iconName='file' titleName='Terminos y condiciones' navigation={() => props.navigation.navigate('terms')}/>
             </View>
             <View style={s.bgContainerLine}>
                 <Logout iconName='sign-out' titleName='Cerrar sesión' />
@@ -141,6 +142,10 @@ function DrawerNavigationDesign() {
                 <Drawer.Screen
                     name="categories"
                     component={Categories}
+                />
+                <Drawer.Screen
+                    name="terms"
+                    component={Terms}
                 />
             </Drawer.Navigator>
         </NavigationContainer>

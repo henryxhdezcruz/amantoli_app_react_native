@@ -27,8 +27,7 @@ export default function FavoriteList(props) {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 20,
-    paddingHorizontal: 10,
-    paddingBottom: 120
+    paddingHorizontal: 20
   },
   title: {
     fontSize: 18,

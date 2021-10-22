@@ -6,6 +6,7 @@ import ResetPwdForm from '../components/Auth/ResetPwdForm'
 import ForgotPwdForm from '../components/Auth/ForgotPwdForm'
 import LoginForm from '../components/Auth/LoginForm'
 import RegisterForm from '../components/Auth/RegisterForm'
+import Terms from '../screens/Terms/Terms'
 import colors from "../styles/colors"
 
 const Stack = createStackNavigator();
@@ -52,6 +53,13 @@ export default function AuthStack() {
                     component={RegisterForm}
                     options={{
                         headerShown: false
+                    }}                
+                />
+                <Stack.Screen 
+                    name="terms"
+                    component={Terms}
+                    options={{
+                        title: "Términos y condiciones"
                     }}                
                 />
             </Stack.Navigator>

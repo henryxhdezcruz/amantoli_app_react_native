@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { StyleSheet, View, Text, ScrollView, RefreshControl } from 'react-native'
+import { StyleSheet, View, Text, ScrollView, RefreshControl, useWindowDimensions, Image } from 'react-native'
 import StatusBar from "../../components/StatusBar"
 import Search from "../../components/Search"
 import ScreenLoading from "../../components/ScreenLoading"
@@ -17,29 +17,31 @@ import { Button } from 'react-native-paper'
 const split = require('split-string');
 import colors from '../../styles/colors'
 import { Icon } from 'react-native-elements'
+import RenderHtml from 'react-native-render-html';
 
 export default function Product(props) {
 
     const wait = (timeout) => {
         return new Promise(resolve => setTimeout(resolve, timeout));
     }
+    
+    const { width } = useWindowDimensions();
 
     const { route } = props;
 
     const { params } = route;
 
     const [product, setProduct] = useState(null);
-
     const [productColors, setProductColors] = useState(null);
-
-    const [sizeColors, setSizeColors] = useState(null);
+    const [productSize, setProductSize] = useState(null);
+    const [productSizeColor, setProductSizeColor] = useState(null);
+    
+    const [isSelectedQuantity, setSelectionQuantity] = useState(null);
 
     const [images, setImages] = useState([]);
-
-    const [quantity, setQuantity] = useState(1);
+    const [quantity, setQuantity] = useState(0);
 
     const [relatedProducts, setRelatedProducts] = useState([]);
-
     const [refreshing, setRefreshing] = useState(false);
 
 
@@ -54,6 +56,14 @@ export default function Product(props) {
         wait(2000).then(() => setRefreshing(false));
     }, []);
 
+    function countQuantity(arr) {
+        cantidad = 0;
+        arr.forEach(count => {
+            cantidad += parseInt(count);
+        });
+        return cantidad;
+    }
+
     useEffect(() => {
         setProduct(null);
         (async () => {
@@ -62,25 +72,28 @@ export default function Product(props) {
             const ColorProducts = await getColorProduct(params.idProduct);
             const SizeProducts = await getSizeProduct(params.idProduct);
 
-            const ImageProduct = getImageProduct(params.idProduct);
-            //console.log("No lo se bro" + ImageProduct);
-            setImages(ImageProduct);
-
-            if (ColorProducts.length === 0) {
-                setSizeColors(SizeProducts);
-            } else {
+            if (ColorProducts.length > 0) {
                 setProductColors(ColorProducts);
+                setQuantity(countQuantity(map(ColorProducts, "quantity")));
             }
 
-            //console.log(ColorProducts);
-            //ColorProducts.forEach(color => console.log(color.id));
+            if (SizeProducts.length > 0) {
+                setProductSize(SizeProducts);
+                const temp = map(SizeProducts, "id");
 
+                var arrSizeColor = [];
+                for (let index = 0; index < temp.length; index++) {
+                    const ColorSize = await getColorSizeProduct(temp[index]);
+                    arrSizeColor = arrSizeColor.concat(ColorSize);
+                }
+                setQuantity(countQuantity(map(arrSizeColor, "quantity")));
+                setProductSizeColor(arrSizeColor);
+            }
+            
+            const ImageProduct = getImageProduct(params.idProduct);
+            setImages(ImageProduct);
 
-            //console.log(SizeProducts);
-            //const ColorSizeProduct = await getColorSizeProduct();
-
-
-            //SizeProducts.forEach(color => console.log(color.id));
+            // SizeProducts.forEach(color => console.log(color.id));
             // const arrayImages = [response.main_image];
             // arrayImages.push(...response.images);
             // setImages(arrayImages);
@@ -124,22 +137,35 @@ export default function Product(props) {
                             </View>
                         </View>
 
-                        <SizeColor sizeColors={sizeColors} setSizeColors={setSizeColors} />
+                        {
+                            productSize != null ? (
+                                <SizeColor productSize={productSize} productSizeColor={productSizeColor}/>
+                            ) : (
+                                <Text/>
+                            )                            
+                        }
+                        
+                        {
+                            productColors != null ? (
+                                <View style={[styles.row, styles.center]}>
+                                    <Text>Color:  </Text>
+                                    <View>
+                                        <Colors productColors={productColors} setProductColors={setProductColors} />
+                                    </View>
+                                </View>
+                            ):(
+                                <Text/>
+                            )
+                        }
 
-                        <View style={[styles.row, styles.center]}>
-                            <Text style={styles.textTitle}>Color: </Text>
-                            <View>
-                                <Colors productColors={productColors} setProductColors={setProductColors} />
-                            </View>
-                        </View>
                         <View style={styles.qtyBuy}>
-                            <Text style={styles.textDetails}>Stock Disponible: 50</Text>
+                            <Text>Stock Disponible: {quantity != 0 ? quantity : product.product_quantity}</Text>
                             <View style={[styles.row, styles.center]}>
                                 <View style={{ width: "25%" }}>
-                                    <Quantity quantity={quantity} setQuantity={setQuantity} />
+                                    <Quantity setSelectionQuantity={setSelectionQuantity} stock={(quantity != 0) ? (quantity):(product.product_quantity != null ? (product.product_quantity):(0))} />
                                 </View>
                                 <View style={styles.addcart}>
-                                    <Buy product={product} quantity={quantity} />
+                                    <Buy product={product} quantity={isSelectedQuantity}/>
                                 </View>
                             </View>
                         </View>
@@ -148,7 +174,10 @@ export default function Product(props) {
                         </View>
                         <View style={[styles.viewDetails]}>
                             <Text style={styles.textTitle}>Descripción</Text>
-                            <Text style={styles.textDetails}>{product.product_description}</Text>
+                            <RenderHtml
+                                contentWidth={width}
+                                source={{html:product.product_description}}
+                            />
                         </View>
                         <ScrollView horizontal>
                         </ScrollView>
@@ -186,19 +215,16 @@ const styles = StyleSheet.create({
         alignItems: "center",
         alignSelf: "center",
     },
-    textDetails: {
-        fontSize: 16,
-        color: colors.fontPrice,
-    },
     viewDetails: {
         borderWidth: 1,
         borderColor: colors.bgGray,
         marginTop: 15,
-        padding: 10
+        padding: 10,
+        borderRadius: 5
     },
     textTitle: {
         fontSize: 18,
-        marginBottom: 5
+        marginBottom: 2
     },
     qtyBuy: {
         marginTop: 15
@@ -210,5 +236,5 @@ const styles = StyleSheet.create({
         backgroundColor: colors.bgwhite,
         width: "100%",
         marginVertical: 10
-    }
+    },
 })

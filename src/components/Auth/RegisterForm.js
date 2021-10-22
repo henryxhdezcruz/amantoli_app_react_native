@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, Text, CheckBox } from 'react-native';
 import { TextInput, Button } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native"
 import logo from "../../../assets/logo.png"
@@ -10,6 +10,8 @@ import { Icon } from 'react-native-elements';
 import { formStyle } from "../../styles";
 import { useToast } from 'react-native-fast-toast'
 import { layoutStyle } from "../../styles"
+import colors from '../../styles/colors';
+import { color } from 'react-native-elements/dist/helpers';
 
 export default function RegisterForm(props) {
 
@@ -18,6 +20,8 @@ export default function RegisterForm(props) {
     const [secure, setSecure] = useState(true);
 
     const [secureR, setSecureR] = useState(true);
+    
+    const [isSelected, setSelection] = useState(false);
 
     const toast = useToast();
     
@@ -121,6 +125,16 @@ export default function RegisterForm(props) {
                 </View>
             </View>
 
+            <View style={styles.checkboxContainer}>
+                <CheckBox
+                    value={isSelected}
+                    onValueChange={setSelection}
+                    style={styles.checkbox}
+                />
+                <Text style={styles.textcheckbox} >Aceptar todos los </Text>
+                <Text style={styles.link} onPress={() => navigation.navigate("terms")}>Términos y Condiciones</Text>
+            </View>
+
             <Button
                 mode="contained"
                 style={formStyle.btnSuccess}
@@ -177,5 +191,22 @@ const styles = StyleSheet.create({
     iconeye: {
         position: "absolute",
         marginRight: 50
-    }
+    },
+    textcheckbox: {
+        color: colors.fontBlack,
+        marginVertical: 8,
+    },
+    link: {
+        color: colors.fontBlack,
+        textDecorationLine: "underline",
+        marginVertical: 8,
+    },
+    checkbox: {
+        alignSelf: "center",
+    },
+    checkboxContainer: {
+        flexDirection: "row",
+        marginBottom: 20,
+        alignSelf: "center"
+    },
 })

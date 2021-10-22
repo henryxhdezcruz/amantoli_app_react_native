@@ -25,7 +25,6 @@ export default function Favorites() {
 
       (async () => {
         const response = await getFavoriteApi(auth);
-        console.log(response);
         setProducts(response);
       })();
 

@@ -15,22 +15,28 @@ export default function Buy(props) {
     const toast = useToast();
 
     const addProductCart = async () => {
-        const response = await addProductCartApi(product._id, quantity);
-        if (response) {
-            toast.show("Producto añadido al carrito", {
-                position: 'top',
-                duration: 4000,
-                offset: 40,
-                animationType: 'zoom-in',
-            });
-        } else {
-            toast.show("ERROR al añadir el producto al carrito", {
-                position: 'top',
-                duration: 4000,
-                offset: 40,
-                animationType: 'zoom-in',
-            });
-        }
+        toast.show("Carrito " + product + quantity, {
+                    position: 'top',
+                    duration: 4000,
+                    offset: 40,
+                    animationType: 'zoom-in',
+                });
+        // const response = await addProductCartApi(product._id, quantity);
+        // if (response) {
+        //     toast.show("Producto añadido al carrito", {
+        //         position: 'top',
+        //         duration: 4000,
+        //         offset: 40,
+        //         animationType: 'zoom-in',
+        //     });
+        // } else {
+        //     toast.show("ERROR al añadir el producto al carrito", {
+        //         position: 'top',
+        //         duration: 4000,
+        //         offset: 40,
+        //         animationType: 'zoom-in',
+        //     });
+        // }
     };
 
     return (
@@ -39,7 +45,6 @@ export default function Buy(props) {
                 mode="contained"
                 contentStyle={styles.btnBuyContent}
                 labelStyle={styles.btnLabel}
-                style={styles.btn}
                 onPress={addProductCart}
             >
                 Agregar al carrito

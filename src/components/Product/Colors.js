@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import AwesomeIcon from "react-native-vector-icons/FontAwesome"
 import colors from "../../styles/colors";
+import { map } from "lodash"
 import SelectDropdown from 'react-native-select-dropdown'
 
 export default function Colors(props) {
   const { productColors, setProductColors } = props;
-
-  console.log("Colores " + productColors);
-
-  const ej = ["Blanco", "Azul", "Rojo", "Negro"]
+ 
+  const arr = map(productColors, "name");
 
   const renderIcon = () => {
     return (
@@ -22,7 +21,7 @@ export default function Colors(props) {
       <SelectDropdown
         defaultValueByIndex={0}
         renderDropdownIcon={renderIcon}
-        data={ej}
+        data={arr}
         buttonStyle={styles.button}
         rowTextStyle={styles.buttonTextStyle}
         rowStyle={styles.dropDownPicker}

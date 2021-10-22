@@ -17,8 +17,6 @@ export default function ProductList(props) {
 
   const { products } = props;
 
-  //console.log(products);
-
   const navigation = useNavigation();
 
   const calcPrice = (price, discount) => {
@@ -51,7 +49,7 @@ export default function ProductList(props) {
               />
             </View>
             <View style={styles.info}>
-              <Text style={styles.name} numberOfLines={3} ellipsizeMode="tail">
+              <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
                 {product.product_name}
               </Text>
               <View style={styles.prices}>
@@ -93,7 +91,7 @@ const styles = StyleSheet.create({
   },
   containerImage: {
     width: "40%",
-    height: 200,
+    height: 140,
     backgroundColor: "#ebebeb",
     padding: 5,
   },
