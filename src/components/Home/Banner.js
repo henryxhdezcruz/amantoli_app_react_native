@@ -22,6 +22,7 @@ export default function Banner() {
         (async () => {
             const response = await getBannerApi();
             setBanners(response);
+            
         })();
     }, []);
 

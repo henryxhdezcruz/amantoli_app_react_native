@@ -43,9 +43,9 @@ export default function ProductList(props) {
             <View style={styles.containerImage}>
               <Image
                 style={styles.image}
-              // source={{
-              // uri: `${API_URL}${product.main_image.url}`,
-              // }}
+                source={{
+                  uri: `http://amantoli.com.mx/storage/${product.product_image}`,
+                }}
               />
             </View>
             <View style={styles.info}>

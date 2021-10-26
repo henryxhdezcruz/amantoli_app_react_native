@@ -16,7 +16,7 @@ export default function CarouselImages(props) {
     const renderItem = ({ item }) => {
 
         return (
-            <Image style={styles.carousel} source={{ uri: `${API_URL}${item.url}` }} />
+            <Image style={styles.carousel} source={{ uri: `http://amantoli.com.mx/storage/${item.url}` }} />
         )
 
     }

@@ -14,8 +14,6 @@ export default function Product(props) {
 
   const { item, auth, setReloadFavorite } = props;
 
-  //console.log(item);
-
   const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation();
@@ -52,9 +50,9 @@ export default function Product(props) {
         <View style={styles.containerImage}>
           <Image
             style={styles.image}
-          // source={{
-          //   uri: `${API_URL}${item.product.main_image.url}`,
-          // }}
+          source={{
+            uri: `http://amantoli.com.mx/storage/${item.product_image}`,
+          }}
           />
         </View>
         <View style={styles.info}>

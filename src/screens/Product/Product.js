@@ -26,17 +26,18 @@ export default function Product(props) {
     }
     
     const { width } = useWindowDimensions();
-
     const { route } = props;
-
     const { params } = route;
 
     const [product, setProduct] = useState(null);
     const [productColors, setProductColors] = useState(null);
     const [productSize, setProductSize] = useState(null);
     const [productSizeColor, setProductSizeColor] = useState(null);
-    
+
     const [isSelectedQuantity, setSelectionQuantity] = useState(null);
+    const [isSelectedSize, setSelectionSize] = useState(null);
+    const [isSelectedSizeColor, setSelectionSizeColor] = useState(null);
+    const [isSelectedColor, setSelectionColor] = useState(null);
 
     const [images, setImages] = useState([]);
     const [quantity, setQuantity] = useState(0);
@@ -89,14 +90,13 @@ export default function Product(props) {
                 setQuantity(countQuantity(map(arrSizeColor, "quantity")));
                 setProductSizeColor(arrSizeColor);
             }
-            
-            const ImageProduct = getImageProduct(params.idProduct);
-            setImages(ImageProduct);
 
-            // SizeProducts.forEach(color => console.log(color.id));
-            // const arrayImages = [response.main_image];
-            // arrayImages.push(...response.images);
-            // setImages(arrayImages);
+            if(quantity == 0) {
+                if (parseInt(response.product_quantity) > 0) (setQuantity(response.product_quantity));
+            }
+            
+            const ImageProduct = await getImageProduct(params.idProduct);
+            setImages(ImageProduct);
         })();
     }, [params]);
 
@@ -117,7 +117,7 @@ export default function Product(props) {
                     }
                 >
                     <Text style={styles.title}>{product.product_name}</Text>
-                    {/* <CarouselImage images={images} /> */}
+                    <CarouselImage images={images} />
                     <View style={styles.containerView}>
                         <Text style={styles.textTitle}>Marca: {product.brand_name}</Text>
                         <Price price={product.product_price} discount={product.discount} />
@@ -139,18 +139,18 @@ export default function Product(props) {
 
                         {
                             productSize != null ? (
-                                <SizeColor productSize={productSize} productSizeColor={productSizeColor}/>
+                                <SizeColor setQuantity={setQuantity} setSelectionSizeColor={setSelectionSizeColor} setSelectionSize={setSelectionSize} productSize={productSize}/>
                             ) : (
                                 <Text/>
                             )                            
                         }
-                        
+
                         {
                             productColors != null ? (
                                 <View style={[styles.row, styles.center]}>
                                     <Text>Color:  </Text>
                                     <View>
-                                        <Colors productColors={productColors} setProductColors={setProductColors} />
+                                        <Colors setSelectionColor={setSelectionColor} productColors={productColors}/>
                                     </View>
                                 </View>
                             ):(
@@ -159,13 +159,13 @@ export default function Product(props) {
                         }
 
                         <View style={styles.qtyBuy}>
-                            <Text>Stock Disponible: {quantity != 0 ? quantity : product.product_quantity}</Text>
+                            <Text>Stock Disponible: {quantity}</Text>
                             <View style={[styles.row, styles.center]}>
                                 <View style={{ width: "25%" }}>
-                                    <Quantity setSelectionQuantity={setSelectionQuantity} stock={(quantity != 0) ? (quantity):(product.product_quantity != null ? (product.product_quantity):(0))} />
+                                    <Quantity setSelectionQuantity={setSelectionQuantity} stock={quantity} />
                                 </View>
                                 <View style={styles.addcart}>
-                                    <Buy product={product} quantity={isSelectedQuantity}/>
+                                    <Buy quantity={quantity} product={product} isSelectedQuantity={isSelectedQuantity} isSelectedColor={isSelectedColor} isSelectedSize={isSelectedSize} isSelectedSizeColor={isSelectedSizeColor}/>
                                 </View>
                             </View>
                         </View>

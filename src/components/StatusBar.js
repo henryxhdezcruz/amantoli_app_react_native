@@ -1,5 +1,7 @@
 import React from 'react'
 import { StatusBar, SafeAreaView } from 'react-native'
+import { color } from 'react-native-elements/dist/helpers';
+import colors from '../styles/colors'
 
 export default function StatusBarCustom(props) {
 
@@ -7,11 +9,11 @@ export default function StatusBarCustom(props) {
 
     return (
         <>
-            <StatusBar backgroundColor={backgroundColor} {...rest} />
+            <StatusBar backgroundColor={colors.bgDark} {...rest} />
             <SafeAreaView
                 style={{
                     flex: 0,
-                    backgroundColor: backgroundColor,
+                    backgroundColor: colors.bgDark,
                 }}
             />
         </>

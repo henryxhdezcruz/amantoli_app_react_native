@@ -42,7 +42,7 @@ export default function ListProduct(props) {
                             <Image
                                 style={styles.image}
                                 source={{
-                                    uri: `http://amantoli.com.mx/storage/${product.category_image}`,
+                                    uri: `http://amantoli.com.mx/storage/${product.product_image}`,
                                 }}
                             />
                             <Text

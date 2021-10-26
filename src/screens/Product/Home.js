@@ -14,7 +14,7 @@ import colors from '../../styles/colors'
 export default function Home() {
     return (
         <>
-            <StatusBar backgroundColor={colors.bgDark} barStyle="light-content" />
+            <StatusBar/>
             <Search />
             <ScrollView>
                 <Banner />

@@ -6,7 +6,7 @@ import { map } from "lodash"
 import SelectDropdown from 'react-native-select-dropdown'
 
 export default function Colors(props) {
-  const { productColors, setProductColors } = props;
+  const { productColors, setSelectionColor } = props;
  
   const arr = map(productColors, "name");
 
@@ -29,6 +29,7 @@ export default function Colors(props) {
         dropDownStyle={styles.dropDownPicker}
         onSelect={(selectedItem, index) => {
           console.log(selectedItem, index)
+          setSelectionColor(selectedItem);
         }}
         buttonTextAfterSelection={(selectedItem, index) => {
           return selectedItem

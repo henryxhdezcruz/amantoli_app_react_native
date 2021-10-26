@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Provider as PaperProvider } from "react-native-paper"
+import { configureFonts, DefaultTheme, Provider as PaperProvider } from "react-native-paper"
 import jwtDecode from 'jwt-decode';
 import AppNavigation from "./src/navigation/AppNavigation"
 import DrawerNavigation from './src/navigation/DrawerNavigation';
@@ -55,10 +55,79 @@ export default function App() {
 
   if (auth === undefined) return null;
 
+  const fontConfig = {
+    web: {
+      regular: {
+        fontFamily: 'sans-serif',
+        fontWeight: 'normal',
+      },
+      medium: {
+        fontFamily: 'sans-serif-medium',
+        fontWeight: 'normal',
+      },
+      light: {
+        fontFamily: 'sans-serif-light',
+        fontWeight: 'normal',
+      },
+      thin: {
+        fontFamily: 'sans-serif-thin',
+        fontWeight: 'normal',
+      },
+    },
+    ios: {
+      regular: {
+        fontFamily: 'sans-serif',
+        fontWeight: 'normal',
+      },
+      medium: {
+        fontFamily: 'sans-serif-medium',
+        fontWeight: 'normal',
+      },
+      light: {
+        fontFamily: 'sans-serif-light',
+        fontWeight: 'normal',
+      },
+      thin: {
+        fontFamily: 'sans-serif-thin',
+        fontWeight: 'normal',
+      },
+    },
+    android: {
+      regular: {
+        fontFamily: 'sans-serif',
+        fontWeight: 'normal',
+      },
+      medium: {
+        fontFamily: 'sans-serif-medium',
+        fontWeight: 'normal',
+      },
+      light: {
+        fontFamily: 'sans-serif-light',
+        fontWeight: 'normal',
+      },
+      thin: {
+        fontFamily: 'sans-serif-thin',
+        fontWeight: 'normal',
+      },
+    }
+  };
+
+  const theme = {
+    ...DefaultTheme,
+    roundness: 2,
+    colors: {
+      ...DefaultTheme.colors,
+      primary: '#404040',
+      secondary: '#404040',
+      accent: '#F97316',
+    },
+    fonts: configureFonts(fontConfig),
+  };
+
   return (
     <ToastProvider>
       <AuthContext.Provider value={authData}>
-        <PaperProvider>
+        <PaperProvider theme={theme}>
           {auth ? <DrawerNavigationDesign /> : <AuthStack/>}
         </PaperProvider>
       </AuthContext.Provider>

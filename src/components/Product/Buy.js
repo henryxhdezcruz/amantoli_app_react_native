@@ -1,27 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { Button } from 'react-native-paper';
-//import Toast from 'react-native-root-toast';
-//import Toast  from  'react-native-toast-message' ;
 import { useToast } from 'react-native-fast-toast'
-import { addProductCartApi } from '../../api/cart';
+import { add_product_shopping_cart } from '../../api/cart';
 import { Icon } from 'react-native-elements'
 import colors from '../../styles/colors';
+import useAuth from '../../hooks/useAuth';
 
 export default function Buy(props) {
 
-    const { product, quantity } = props;
+    const { quantity, product, isSelectedQuantity, isSelectedColor, isSelectedSize, isSelectedSizeColor } = props;
 
     const toast = useToast();
 
+    const { auth } = useAuth();
+
     const addProductCart = async () => {
-        toast.show("Carrito " + product + quantity, {
+        toast.show("Producto " + product.product_id + " cantidad " + isSelectedQuantity + " color " + isSelectedColor + " talla " + isSelectedSize + " tallacolor " + isSelectedSizeColor , {
                     position: 'top',
                     duration: 4000,
                     offset: 40,
                     animationType: 'zoom-in',
                 });
-        // const response = await addProductCartApi(product._id, quantity);
+        const response = await add_product_shopping_cart(auth, product.product_id, isSelectedSize, isSelectedSizeColor, isSelectedColor, isSelectedQuantity);
+        console.log(response);
         // if (response) {
         //     toast.show("Producto añadido al carrito", {
         //         position: 'top',
@@ -46,6 +48,7 @@ export default function Buy(props) {
                 contentStyle={styles.btnBuyContent}
                 labelStyle={styles.btnLabel}
                 onPress={addProductCart}
+                disabled={parseInt(quantity) == 0 ? true : false }
             >
                 Agregar al carrito
             </Button>

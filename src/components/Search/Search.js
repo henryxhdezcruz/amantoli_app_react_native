@@ -118,8 +118,6 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
         zIndex: 1,
-        //flexDirection: "row",
-        //position: "relative",
     },
     containerInput: {
         position: "relative",

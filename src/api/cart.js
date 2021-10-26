@@ -2,18 +2,31 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { size, map, filter } from "lodash";
 import { CART, API_URL } from "../utils/constants";
 
-export async function getProductCartApi() {
-  //await AsyncStorage.removeItem(CART);
+export async function read_shopping_cart(auth) {
   try {
-    const cart = await AsyncStorage.getItem(CART);
-    if (!cart) return [];
-    return JSON.parse(cart);
-  } catch (e) {
+    const url = `${API_URL}/api/shopping_cart/read_shopping_cart.php?user_id=${auth.idUser}`;
+    const response = await fetch(url);
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+}
+
+export async function add_product_shopping_cart(auth, product_id, size, size_color, color, quantity) {
+  try {
+    const url = `${API_URL}/api/shopping_cart/add_product_shopping_cart.php?user_id=${auth.idUser}&product_id=${product_id}&size=${size}&size_color=${size_color}&color=${color}&quantity=${quantity}`;
+    const response = await fetch(url);
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.log(error);
     return null;
   }
 }
 
-export async function addProductCartApi(idProduct, quantity) {
+/*export async function addProductCartApi(idProduct, quantity) {
   try {
     const cart = await getProductCartApi();
 
@@ -46,17 +59,16 @@ export async function addProductCartApi(idProduct, quantity) {
   } catch (e) {
     return false;
   }
-}
+}*/
 
-export async function deleteProductCartApi(idProduct) {
+export async function delete_product_shopping_cart(auth, product_id) {
   try {
-    const cart = await getProductCartApi();
-    const newCart = filter(cart, (product) => {
-      return product.idProduct !== idProduct;
-    });
-    await AsyncStorage.setItem(CART, JSON.stringify(newCart));
-    return true;
-  } catch (e) {
+    const url = `${API_URL}/api/shopping_cart/delete_product_shopping_cart.php?user_id=${auth.idUser}&product_id=${product_id}`;
+    const response = await fetch(url);
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.log(error);
     return null;
   }
 }

@@ -1,6 +1,6 @@
 //export const API_URL = "https://picpaint.herokuapp.com";
-export const API_URL = "http://api.amantoli.com.mx/WS";
-//export const API_URL = "http://192.168.8.160/Amantoli_WS_movil";
+//export const API_URL = "http://api.amantoli.com.mx/WS";
+export const API_URL = "http://192.168.8.160/Amantoli_WS_movil";
 export const TOKEN = "token";
 //export const TOKEN_COPOMEX ="3f4df10b-726f-4af1-9a3b-ed4f000c3f30";
 export const TOKEN_COPOMEX = "pruebas";

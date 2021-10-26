@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Image, Text, CheckBox } from 'react-native';
-import { TextInput, Button } from "react-native-paper";
+import { View, StyleSheet, Image, Text } from 'react-native';
+import { TextInput, Button, Checkbox } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native"
 import logo from "../../../assets/logo.png"
 import { useFormik } from "formik";
@@ -12,6 +12,7 @@ import { useToast } from 'react-native-fast-toast'
 import { layoutStyle } from "../../styles"
 import colors from '../../styles/colors';
 import { color } from 'react-native-elements/dist/helpers';
+import { boolean } from 'yup/lib/locale';
 
 export default function RegisterForm(props) {
 
@@ -126,11 +127,14 @@ export default function RegisterForm(props) {
             </View>
 
             <View style={styles.checkboxContainer}>
-                <CheckBox
-                    value={isSelected}
-                    onValueChange={setSelection}
+                <Checkbox
+                    status={isSelected ? 'checked' : 'unchecked'}
+                    onPress={() => {
+                        setSelection(!isSelected);
+                        formik.setFieldValue("isChecked", isSelected)
+                      }}
                     style={styles.checkbox}
-                />
+                ></Checkbox>
                 <Text style={styles.textcheckbox} >Aceptar todos los </Text>
                 <Text style={styles.link} onPress={() => navigation.navigate("terms")}>Términos y Condiciones</Text>
             </View>
@@ -162,7 +166,8 @@ function initialValues() {
         email: "",
         username: "",
         password: "",
-        repeatPassword: ""
+        repeatPassword: "",
+        isChecked: true
     }
 }
 
@@ -172,6 +177,7 @@ function validationSchema() {
         username: Yup.string().required(true),
         password: Yup.string().required(true),
         repeatPassword: Yup.string().required(true).oneOf([Yup.ref("password")], true),
+        isChecked: Yup.boolean().required(true).isFalse()
     };
 }
 

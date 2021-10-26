@@ -7,7 +7,7 @@ import SelectDropdown from 'react-native-select-dropdown'
 import { getColorSizeProduct } from "../../api/product";
 
 export default function Size(props) {
-  const { productSize } = props;
+  const { productSize, setSelectionSizeColor, setSelectionSize, setQuantity } = props;
 
   const arrSize = map(productSize, "name");
   const arrIdSize = map(productSize, "id");
@@ -22,8 +22,8 @@ export default function Size(props) {
 
   useEffect(() => {
     (async () => {
-        const ColorSize = await getColorSizeProduct(arrIdSize[0]);
-        setArrSizecolor(map(ColorSize, "name"));
+        // const ColorSize = await getColorSizeProduct(arrIdSize[0]);
+        // setArrSizecolor(map(ColorSize, "name"));
     })();
   }, []);
 
@@ -40,8 +40,12 @@ export default function Size(props) {
           rowStyle={styles.dropDownPicker}
           buttonTextStyle={styles.buttonTextStyle}
           dropDownStyle={styles.dropDownPicker}
-          onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index)
+          onSelect={async (selectedItem, index) => {
+            const ColorSize = await getColorSizeProduct(arrIdSize[index]);
+            setArrSizecolor(map(ColorSize, "name"));
+            
+            setQuantity(map(ColorSize, "quantity"));
+            setSelectionSize(selectedItem);
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem
@@ -51,7 +55,7 @@ export default function Size(props) {
           }}
         />
       </View>
-      
+
       <View style={[styles.row, styles.center]}>
         <Text>Color:  </Text>
         <SelectDropdown
@@ -64,7 +68,7 @@ export default function Size(props) {
           buttonTextStyle={styles.buttonTextStyle}
           dropDownStyle={styles.dropDownPicker}
           onSelect={(selectedItem, index) => {
-            console.log(selectedItem, index)
+            setSelectionSizeColor(selectedItem);
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem

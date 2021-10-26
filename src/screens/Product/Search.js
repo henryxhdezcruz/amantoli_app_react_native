@@ -15,8 +15,6 @@ export default function SearchScreen(props) {
 
     const [products, setProducts] = useState(null);
 
-    //console.log("Screen" + params.search);
-
     useEffect(() => {
         (async () => {
             setProducts(null);

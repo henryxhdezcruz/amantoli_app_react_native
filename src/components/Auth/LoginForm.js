@@ -11,6 +11,7 @@ import { formStyle } from "../../styles"
 import { useToast } from 'react-native-fast-toast'
 import { Icon } from 'react-native-elements';
 import { layoutStyle } from "../../styles"
+import StatusBar from '../../components/StatusBar'
 
 export default function LoginForm(props) {
 
@@ -44,6 +45,8 @@ export default function LoginForm(props) {
     });
 
     return (
+        <>
+        <StatusBar/>
         <View style={layoutStyle.container}>
             <Image style={layoutStyle.logo} source={logo} />
             <TextInput
@@ -104,6 +107,7 @@ export default function LoginForm(props) {
             </Button>
 
         </View>
+        </>
     )
 }
 

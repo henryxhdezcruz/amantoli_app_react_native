@@ -7,8 +7,6 @@ export default function FavoriteList(props) {
 
   const { products, setReloadFavorite, auth } = props;
 
-  //console.log(products);
-
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>LISTA DE FAVORITOS</Text>
