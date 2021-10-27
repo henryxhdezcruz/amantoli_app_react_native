@@ -31,6 +31,7 @@ class MercadoPago extends React.Component {
             <input type="text" value={this.state.value} onChange={this.handleChange} />
           </label>
           <input type="submit" value="Submit" />
+          
 
           <label>
             Fecha :
@@ -39,10 +40,18 @@ class MercadoPago extends React.Component {
           <input type="submit" value="Submit" />
 
           <label>
+
             VCC:
             <input type="text" value={this.state.value} onChange={this.handleChange} />
           </label>
           <input type="submit" value="Submit" />
+
+          <label>
+
+VCC:
+<input type="text" value={this.state.value} onChange={this.handleChange} />
+</label>
+<input type="submit" value="Submit" />
         </form>
 
       );
