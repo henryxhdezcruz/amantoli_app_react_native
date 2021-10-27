@@ -1,1 +1,4 @@
-filtro busqueda
+<form>
+    <label>Filtro de busqueda</label>
+    
+</form>
