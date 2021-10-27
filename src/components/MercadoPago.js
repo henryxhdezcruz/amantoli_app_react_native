@@ -1,4 +1,4 @@
-class NameForm extends React.Component {
+class MercadoPago extends React.Component {
     constructor(props) {
       super(props);
       this.state = {value: ''};
@@ -21,11 +21,30 @@ class NameForm extends React.Component {
         <form onSubmit={this.handleSubmit}>
 
           <label>
+            Nombre:
+            <input type="text" value={this.state.value} onChange={this.handleChange} />
+          </label>
+          <input type="submit" value="Submit" />
+
+          <label>
             Car:
             <input type="text" value={this.state.value} onChange={this.handleChange} />
           </label>
           <input type="submit" value="Submit" />
+
+          <label>
+            Fecha :
+            <input type="text" value={this.state.value} onChange={this.handleChange} />
+          </label>
+          <input type="submit" value="Submit" />
+
+          <label>
+            VCC:
+            <input type="text" value={this.state.value} onChange={this.handleChange} />
+          </label>
+          <input type="submit" value="Submit" />
         </form>
+
       );
     }
   }
