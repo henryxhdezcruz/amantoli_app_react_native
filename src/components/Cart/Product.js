@@ -1,27 +1,28 @@
-import React from 'react'
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  Text,
-  Image,
-  TouchableWithoutFeedback,
-  TextInput
-} from "react-native";
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, View, ScrollView, Text, Image, TouchableWithoutFeedback, TextInput} from "react-native";
 import { Button, IconButton } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { API_URL } from "../../utils/constants";
-import {
-  deleteProductCartApi,
-  decreaseProductCartApi,
-  increaseProductCartApi,
-} from '../../api/cart';
+import { delete_product_shopping_cart, decreaseProductCartApi, increaseProductCartApi, read_product_shopping_cart } from '../../api/cart';
 import colors from "../../styles/colors";
+import useAuth from '../../hooks/useAuth';
 
 export default function Product(props) {
+
   const { product, setReloadCart } = props;
+  
+  const [cartProduct, setcartProduct] = useState([]);
 
   const navigation = useNavigation();
+
+  const { auth } = useAuth();
+
+  useEffect(() => {
+      (async () => {
+          // const response = await read_product_shopping_cart(auth, product.product_id);
+          // console.log(response.quantity);
+      })();
+  }, []);
 
   const calcPrice = (price, discount) => {
     if (!discount) return price;
@@ -31,17 +32,18 @@ export default function Product(props) {
   };
 
   const deleteProductCart = async () => {
-    const response = await deleteProductCartApi(product._id);
+    const response = await delete_product_shopping_cart(auth, product.product_id);
+    console.log(response);
     if (response) setReloadCart(true);
   }
 
   const decreaseProductCart = async () => {
-    const response = await decreaseProductCartApi(product._id);
+    const response = await decreaseProductCartApi(product.product_id);
     if (response) setReloadCart(true);
   };
 
   const increaseProductCart = async () => {
-    const response = await increaseProductCartApi(product._id);
+    const response = await increaseProductCartApi(product.product_id);
     if (response) setReloadCart(true);
   };
 
@@ -50,28 +52,25 @@ export default function Product(props) {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={() => goToProduct(product._id)}>
+    <TouchableWithoutFeedback onPress={() => goToProduct(product.product_id)}>
       <View style={styles.product}>
         <View style={styles.containerImage}>
           <Image
             style={styles.image}
-            source={{
-              uri: `${API_URL}${product.main_image.url}`,
+          source={{
+              uri: `http://amantoli.com.mx/storage/${product.product_image}`,
             }}
           />
         </View>
         <View style={styles.info}>
           <View>
             <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">
-              {product.title}
+              {product.product_name}
             </Text>
             <View style={styles.prices}>
               <Text style={styles.currentPrice}>
-                $MXN {calcPrice(product.price, product.discount)}
+                $MXN {product.product_price}
               </Text>
-              {product.discount && (
-                <Text style={styles.oldPrice}>$MXN {product.price}</Text>
-              )}
             </View>
           </View>
           <View style={styles.btnsContainer}>
@@ -83,7 +82,7 @@ export default function Product(props) {
                 style={styles.btnQuantity}
                 onPress={decreaseProductCart}
               />
-              <TextInput style={styles.inputQuantity} value={product.quantity.toString()} />
+              {/* <TextInput style={styles.inputQuantity} value={cartProduct.quantity.toString()} /> */}
               <IconButton
                 icon="plus"
                 color="black"
@@ -96,7 +95,7 @@ export default function Product(props) {
               Eliminar
             </Button>
           </View>
-          <Button style={styles.btn} color={colors.primary} onPress={() => goToProduct(product._id)}>
+          <Button style={styles.btn} color={colors.primary} onPress={() => goToProduct(product.product_id)}>
             Ver producto
           </Button>
         </View>

@@ -14,6 +14,18 @@ export async function read_shopping_cart(auth) {
   }
 }
 
+export async function read_product_shopping_cart(auth, id_product) {
+  try {
+    const url = `${API_URL}/api/shopping_cart/read_product_shopping_cart.php?user_id=${auth.idUser}&product_id=${id_product}`;
+    const response = await fetch(url);
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+}
+
 export async function add_product_shopping_cart(auth, product_id, size, size_color, color, quantity) {
   try {
     const url = `${API_URL}/api/shopping_cart/add_product_shopping_cart.php?user_id=${auth.idUser}&product_id=${product_id}&size=${size}&size_color=${size_color}&color=${color}&quantity=${quantity}`;

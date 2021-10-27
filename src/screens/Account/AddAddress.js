@@ -113,7 +113,7 @@ export default function AddAddress(props) {
                         error={formik.errors.title}
                     />
                     <TextInput 
-                        label="Nombre y apellido*" 
+                        label="A nombre de*" 
                         maxLength={40}
                         autoCompleteType= "name"
                         style={formStyle.input}
@@ -186,7 +186,7 @@ export default function AddAddress(props) {
                         error={formik.errors.phone}
                     />
                     <TextInput 
-                        label="Indicaciones Adicionales" 
+                        label="Indicaciones o referencias  Adicionales" 
                         numberOfLines= {5}
                         maxFontSizeMultiplier={4}
                         editable

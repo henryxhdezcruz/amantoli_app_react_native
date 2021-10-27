@@ -73,12 +73,12 @@ export default function Cart() {
                         setReloadCart={setReloadCart}
                         setTotalPayment={setTotalPayment}
                     />
-                    {/* <AddressList
+                    <AddressList
                         addresses={addresses}
                         selectedAddress={selectedAddress}
                         setSelectedAddress={setSelectedAddress}
                     />
-                    <Payment
+                    {/* <Payment
                       totalPayment={totalPayment}
                       products={products}
                       selectedAddress={selectedAddress}

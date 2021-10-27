@@ -1,45 +1,45 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View, Text} from "react-native";
-import { map } from "lodash";
+import { map, toInteger } from "lodash";
 import ScreenLoading from "../ScreenLoading";
 import { getProductApi } from "../../api/product";
 import Product from "../../components/Cart/Product";
 
 export default function ProductList(props) {
     const { cart, products, setProducts, setReloadCart, setTotalPayment } = props;
-    console.log(cart);
-    // useEffect(() => {
-    //     setProducts(null);
-    //     (async () => {
 
-    //         const productTemp = [];
-    //         let totalPaymentTemp = 0;
+    useEffect(() => {
+        setProducts(null);
+        (async () => {
 
-    //         for await (const product of cart) {
-    //             const response = await getProductApi(product.idProduct);
-    //             response.quantity = product.quantity;
-    //             productTemp.push(response);
+            const productTemp = [];
+            var totalPaymentTemp = 0;
 
-    //             const price = calcPrice(response.price, response.discount);
+            for await (const product of cart) {
+                const response = await getProductApi(product.id_product);
+                //response.quantity = product.quantity;
+                productTemp.push(response);
 
-    //             totalPaymentTemp += price * response.quantity;
-    //         }
+                const price = parseFloat(response.product_price);
+                //const price = calcPrice(response.price, response.discount);
 
-    //         setProducts(productTemp);
-    //         setTotalPayment(totalPaymentTemp.toFixed(2));
-    //     })();
-    // }, [cart]);
+                totalPaymentTemp += price * parseInt(product.quantity);
+            }
+            setProducts(productTemp);
+            setTotalPayment(totalPaymentTemp.toFixed(2));
+        })();
+    }, [cart]);
 
-    // return (
-    //     <View>
-    //         <Text style={styles.title}>LISTADO DE PRODUCTOS</Text>
-    //         {!products ? (
-    //             <ScreenLoading size="large" text="Cargando carrito" />
-    //         ) : (
-    //             map(products, (product) => <Product key={product._id} product={product} setReloadCart={setReloadCart} />)
-    //         )}
-    //     </View>
-    // )
+    return (
+        <View>
+            <Text style={styles.title}>LISTADO DE PRODUCTOS</Text>
+            {!products ? (
+                <ScreenLoading size="large" />
+            ) : (
+                map(products, (product) => <Product key={product.product_id} product={product} setReloadCart={setReloadCart} />)
+            )}
+        </View>
+    )
 }
 
 function calcPrice(price, discount) {

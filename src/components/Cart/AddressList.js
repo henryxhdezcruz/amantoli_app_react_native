@@ -28,20 +28,20 @@ export default function AddressList(props) {
       {!addresses && <ScreenLoading size="large" text="Cargando lista de direcciones" />}
       {map(addresses, (address) => (
         <TouchableWithoutFeedback
-          key={address._id}
+          key={address.id}
           onPress={() => setSelectedAddress(address)}
         >
           <View
             style={[
               styles.address,
-              address._id === selectedAddress?._id && styles.checked,
+              address.id === selectedAddress?.id && styles.checked,
             ]}
           >
             <View style={styles.containTitle}>
               <Text style={styles.title}>{address.title}</Text>
             </View>
             <View style={styles.containData}>
-              <Text>{address.name_lastname}</Text>
+              <Text>{address.name}</Text>
               <Text>{address.country}</Text>
               <View style={styles.blockLine}>
                 <Text>{address.state}, </Text>

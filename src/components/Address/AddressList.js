@@ -26,7 +26,7 @@ export default function AddressList(props) {
                 },
                 {
                     text: "Si",
-                    onPress: () => deleteAddress(address._id)
+                    onPress: () => deleteAddress(address.id)
                 }
             ],
             { cancelable: false }
@@ -49,13 +49,13 @@ export default function AddressList(props) {
     return (
         <View style={styles.container}>
             {map(addresses, (address) => (
-                <View key={address._id} style={styles.address} >
-                    <TouchableOpacity onPress={() => goToUpdateAddress(address._id)}>
+                <View key={address.id} style={styles.address} >
+                    <TouchableOpacity onPress={() => goToUpdateAddress(address.id)}>
                         <View style={styles.containTitle}>
                             <Text style={styles.title}>{address.title}</Text>
                         </View>
                         <View style={styles.containData}>
-                            <Text>{address.name_lastname}</Text>
+                            <Text>{address.name}</Text>
                             <Text>{address.country}</Text>
                             <View style={styles.blockLine}>
                                 <Text>{address.state}, </Text>
@@ -63,14 +63,14 @@ export default function AddressList(props) {
                                 <Text>{address.postal_code}</Text>
                             </View>
                             <Text>Numero de telefono: {address.phone}</Text>
-                            <Text>Detalles extra: {address.address}</Text>
+                            <Text>Detalles extra: {address.references}</Text>
 
                             <View style={styles.actions}>
                                 <Button
                                     mode="contained"
                                     contentStyle={styles.btnContent}
                                     labelStyle={styles.btnText}
-                                    onPress={() => goToUpdateAddress(address._id)}
+                                    onPress={() => goToUpdateAddress(address.id)}
                                 >
                                     Editar
                                 </Button>
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontWeight: "bold",
-        paddingBottom: 5
+        textTransform: "uppercase",
     },
     blockLine: {
         flexDirection: "row"
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     actions: {
         flexDirection: "row",
         justifyContent: "space-between",
-        marginTop: 30
+        marginTop: 15
     },
     btnContent: {
         paddingVertical: 4,
