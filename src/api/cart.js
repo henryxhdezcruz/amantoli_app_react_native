@@ -129,7 +129,26 @@ export async function increaseProductCartApi(idProduct) {
   }
 }
 
-export async function paymentCartApi(auth, tokenStripe, products, address) {
+export async function paymentCartApi(auth, products, address, totalpayment, token_stripe) {
+  try {
+    const url = `${API_URL}/api/shopping_cart/pay_shopping_cart.php?user_id=${auth.idUser}&
+    contact=${address.name}&
+    phone=${address.phone}&
+    shipping_cost=${totalpayment}&
+    total=${totalpayment}&
+    content=${products}&
+    envio=${address}&
+    token_stripe=${token_stripe}`;
+    const response = await fetch(url);
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function cc(auth, tokenStripe, products, address) {
   try {
     const addressShipping = address;
     delete addressShipping.user;

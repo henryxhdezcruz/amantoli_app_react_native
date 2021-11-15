@@ -1,11 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  Text,
-  ActivityIndicator,
-} from "react-native";
+import { StyleSheet, View, ScrollView, Text, ActivityIndicator,} from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { size } from "lodash";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -13,6 +7,7 @@ import StatusBar from "../components/StatusBar";
 import NotProducts from "../components/Cart/NotProducts";
 import ProductList from "../components/Cart/ProductList";
 import AddressList from "../components/Cart/AddressList";
+import Paypal from "../components/Cart/PayPal";
 import Payment from "../components/Cart/Payment";
 import { read_shopping_cart } from "../api/cart";
 import { getAddressesApi } from "../api/address";
@@ -66,23 +61,34 @@ export default function Cart() {
             ) : (
                 <KeyboardAwareScrollView extraScrollHeight={25}>
                     <ScrollView style={styles.cartContainer}>
-                    <ProductList
-                        cart={cart}
+
+                        <Text style={styles.containerTitle}>PRODUCTOS EN CARRITO</Text>
+                        
+                        <ProductList
+                            cart={cart}
+                            products={products}
+                            setProducts={setProducts}
+                            setReloadCart={setReloadCart}
+                            setTotalPayment={setTotalPayment}
+                        />
+
+                        <Text style={styles.containerTitle}>DETALLES DE LA DIRECCIÓN DE ENVÍO</Text>
+                        
+                        <AddressList
+                            addresses={addresses}
+                            selectedAddress={selectedAddress}
+                            setSelectedAddress={setSelectedAddress}
+                        />
+
+                        <Text style={styles.containerTitle}>ELIGE TU FORMA DE PAGO</Text>
+
+                        <Payment
+                        totalPayment={totalPayment}
                         products={products}
-                        setProducts={setProducts}
-                        setReloadCart={setReloadCart}
-                        setTotalPayment={setTotalPayment}
-                    />
-                    <AddressList
-                        addresses={addresses}
                         selectedAddress={selectedAddress}
-                        setSelectedAddress={setSelectedAddress}
-                    />
-                    {/* <Payment
-                      totalPayment={totalPayment}
-                      products={products}
-                      selectedAddress={selectedAddress}
-                    /> */}
+                        />
+                        
+                        <Paypal></Paypal>
                     </ScrollView>
                 </KeyboardAwareScrollView>
             )}
@@ -92,20 +98,21 @@ export default function Cart() {
 
 const styles = StyleSheet.create({
     cartContainer: {
-      padding: 10,
+        padding: 10,
     },
     reload: {
-      backgroundColor: "#000",
-      position: "absolute",
-      width: "100%",
-      height: "100%",
-      opacity: 0.3,
-      alignItems: "center",
-      justifyContent: "center",
+        backgroundColor: "#000",
+        position: "absolute",
+        width: "100%",
+        height: "100%",
+        opacity: 0.3,
+        alignItems: "center",
+        justifyContent: "center",
     },
-    reloadText: {
-      marginTop: 10,
-      color: "#fff",
+    containerTitle: {
+        paddingVertical: 10,
+        fontSize: 17,
+        fontWeight: "bold"
     },
 });
   

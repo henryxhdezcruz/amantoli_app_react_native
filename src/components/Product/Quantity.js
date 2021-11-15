@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
   },
   buttonTextStyle: {
     color: colors.fontBlack,
+    fontSize: 16
   },
   button: {
     borderRadius: 5,

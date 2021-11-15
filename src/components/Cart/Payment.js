@@ -25,8 +25,12 @@ export default function Payment(props) {
     validationSchema: Yup.object(validationSchema()),
     onSubmit: async (formData) => {
       const result = await stripe.createToken({ card: formData });
-      setLoading(true);
-      //console.log(result);
+      //setLoading(true);
+      console.log(auth);
+      console.log(products);
+      console.log(selectedAddress);
+      console.log(totalPayment);
+      console.log(result.id);
 
       if (result?.error) {
         toast.show(result.error.message, {
@@ -38,30 +42,37 @@ export default function Payment(props) {
       } else {
         const response = await paymentCartApi(
           auth,
-          result.id,
           products,
-          selectedAddress
+          selectedAddress,
+          totalPayment,
+          result.id,
         );
-
-        if (size(response) > 0) {
-          console.log("Pedido completado");
-          await deleteCartApi();
-          navigation.navigate("account", { screen: "orders" });
-        } else {
-          toast.show("Error al realizar el pedido", {
-            duration: 4000,
-            offset: 40,
-            animationType: 'zoom-in',
-          });
+        console.log(response.status);
           setLoading(false);
-        }
+
+        // if (response.status == true) {
+        //   console.log("Pedido completado");
+              toast.show("Pago realizado correctamente", {
+                duration: 4000,
+                offset: 40,
+                animationType: 'zoom-in',
+              });
+        //   await deleteCartApi();
+        //   navigation.navigate("account", { screen: "orders" });
+        // } else {
+        //   toast.show("Error al realizar el pedido", {
+        //     duration: 4000,
+        //     offset: 40,
+        //     animationType: 'zoom-in',
+        //   });
+        //   setLoading(false);
+        // }
       }
     },
   });
 
   return (
-    <View style={styles.continer}>
-      <Text style={styles.containerTitle}>FORMA DE PAGO</Text>
+    <View>
       <TextInput
         label="Nombre de la tarjeta"
         style={formStyle.input}
@@ -71,6 +82,7 @@ export default function Payment(props) {
       />
       <TextInput
         label="Numero de tarjeta"
+        maxLength={16}
         style={formStyle.input}
         onChangeText={(text) => formik.setFieldValue("number", text)}
         value={formik.values.number}
@@ -80,6 +92,7 @@ export default function Payment(props) {
         <View style={styles.containerMonthYearInputs}>
           <TextInput
             label="Mes"
+            maxLength={2}
             style={styles.inputDate}
             onChangeText={(text) => formik.setFieldValue("exp_month", text)}
             value={formik.values.exp_month}
@@ -87,6 +100,7 @@ export default function Payment(props) {
           />
           <TextInput
             label="Año"
+            maxLength={2}
             style={styles.inputDate}
             onChangeText={(text) => formik.setFieldValue("exp_year", text)}
             value={formik.values.exp_year}
@@ -95,6 +109,7 @@ export default function Payment(props) {
         </View>
         <TextInput
           label="CVV/CVC"
+          maxLength={3}
           style={styles.inputCvc}
           onChangeText={(text) => formik.setFieldValue("cvc", text)}
           value={formik.values.cvc}
@@ -131,19 +146,11 @@ function validationSchema() {
     exp_month: Yup.string().min(2).max(2).required(true),
     exp_year: Yup.string().min(2).max(2).required(true),
     cvc: Yup.string().min(3).max(3).required(true),
-    name: Yup.string().min(6).required(true),
+    name: Yup.string().min(2).required(true),
   };
 }
 
 const styles = StyleSheet.create({
-  continer: {
-    marginTop: 40,
-    marginBottom: 30,
-  },
-  containerTitle: {
-    paddingBottom: 10,
-    fontSize: 18,
-  },
   containerInputs: {
     flexDirection: "row",
     justifyContent: "space-between",

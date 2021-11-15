@@ -7,10 +7,10 @@ const colors = {
     dark: "#F97316",
     //fonts
     fontLight: "#BFBFBF",
-    fontPrice: "#747474",
-    fontBlack: "#404040",
+    fontPrice: "#343434",
+    fontBlack: "#343434",
     //background
-    bgDark: "#404040",
+    bgDark: "#343434",
     bgDanger: "#EF4444",
     bgHeart: "#f50",
     bgGray: "#E3E3E3",

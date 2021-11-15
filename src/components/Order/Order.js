@@ -2,9 +2,12 @@ import React from "react";
 import { StyleSheet, View, Text, Image } from "react-native";
 import { API_URL } from "../../utils/constants";
 import colors from "../../styles/colors";
+import { map } from "lodash";
 
 export default function Order(props) {
   const { order } = props;
+
+  map(order, (ord) => (console.log(ord)));
 
   var resp = "";
 
@@ -40,6 +43,7 @@ export default function Order(props) {
         <View style={styles.right}>
           <Text style={styles.text}>{status(order.status)}</Text>
           <Text style={styles.text}>$MXN {order.total}</Text>
+          <Text style={styles.text}>{order.content}</Text>
         </View>
       </View>
     </View>

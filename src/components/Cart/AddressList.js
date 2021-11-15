@@ -20,8 +20,7 @@ export default function AddressList(props) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.containerTitle}>DETALLES DE LA DIRECCIÓN DE ENVÍO</Text>
+    <View>
       <TouchableOpacity onPress={goToAdresses}>
         <Text style={styles.Directions}>Administrar mis direcciones</Text>
       </TouchableOpacity>
@@ -59,13 +58,6 @@ export default function AddressList(props) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 50,
-  },
-  containerTitle: {
-    paddingBottom: 10,
-    fontSize: 18,
-  },
   address: {
     borderWidth: 1,
     borderRadius: 5,

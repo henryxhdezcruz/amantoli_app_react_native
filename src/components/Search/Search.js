@@ -21,7 +21,7 @@ export default function Search(props) {
 
     const onChangeSearch = (query) => setSearchQuery(query);
 
-    const [showHistory, setShowHistory] = useState(false)
+    const [showHistory, setShowHistory] = useState(false);
 
     const openSearch = () => {
         animatedTransition.start();

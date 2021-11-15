@@ -29,5 +29,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     }
-  }
+  }, 
+  "public_key": "TEST-45d3b70d-3886-4b08-9af1-ede87ec932e6",
+  "preference_id": "150216849-ceed1ee4-8ab9-4449-869f-f4a8565d386f"
 }

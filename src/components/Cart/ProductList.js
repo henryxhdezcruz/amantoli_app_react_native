@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View, Text} from "react-native";
+import { View } from "react-native";
 import { map, toInteger } from "lodash";
 import ScreenLoading from "../ScreenLoading";
 import { getProductApi } from "../../api/product";
@@ -32,7 +32,6 @@ export default function ProductList(props) {
 
     return (
         <View>
-            <Text style={styles.title}>LISTADO DE PRODUCTOS</Text>
             {!products ? (
                 <ScreenLoading size="large" />
             ) : (
@@ -48,9 +47,3 @@ function calcPrice(price, discount) {
     const discountAmount = (price * discount) / 100;
     return (price - discountAmount).toFixed(2);
 };
-
-const styles = StyleSheet.create({
-    title: {
-        fontSize: 18,
-    },
-});

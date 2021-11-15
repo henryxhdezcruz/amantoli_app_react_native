@@ -39,3 +39,15 @@ export async function searchProductApi(search) {
         return null;
     }
 }
+
+export async function searchProductFilterApi(search_filter, min_price, max_price, category_name, brand_name) {
+    try {
+        const url = `${API_URL}/api/products/search_filter.php?search=${search_filter}&min_price=${min_price}&max_price=${max_price}&category_name=${category_name}&brand_name=${brand_name}`;
+        const response = await fetch(url);
+        const result = await response.json();
+        return result;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}

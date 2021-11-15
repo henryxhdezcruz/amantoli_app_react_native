@@ -105,25 +105,16 @@ export default function Product(props) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 20,
-    paddingHorizontal: 10,
-  },
-  title: {
-    fontWeight: "bold",
-    fontSize: 19,
-    marginBottom: 5,
-  },
   product: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 15,
+    marginVertical: 5,
     borderRadius: 5,
     borderWidth: 1,
     borderColor: colors.bgGray,
   },
   containerImage: {
-    width: "40%",
+    width: "35%",
     height: 155,
     backgroundColor: colors.bgGray,
     padding: 5,
@@ -134,7 +125,7 @@ const styles = StyleSheet.create({
   },
   info: {
     padding: 10,
-    width: "60%",
+    width: "65%",
     borderRadius: 5
   },
   name: {
@@ -146,19 +137,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   currentPrice: {
-    fontSize: 18,
+    fontSize: 16,
   },
   oldPrice: {
     marginLeft: 10,
     fontSize: 14,
     color: colors.fontPrice,
     textDecorationLine: "line-through",
-  },
-  btn: {
-    position: "absolute",
-    bottom: 10,
-    left: 0,
-    right: 0,
   },
   btnsContainer: {
     flexDirection: "row",

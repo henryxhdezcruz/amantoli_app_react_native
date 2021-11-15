@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@blackbox-vision/react-native-mercadopago-px": "^0.7.2",
     "@react-native-async-storage/async-storage": "^1.15.5",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/drawer": "^5.12.5",
@@ -25,6 +26,7 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
+    "react-native-checkout-mercadopago": "^0.4.0",
     "react-native-dropdown-picker": "3.8.0",
     "react-native-elements": "^3.4.2",
     "react-native-email": "^1.1.0",
@@ -32,6 +34,8 @@
     "react-native-gesture-handler": "^1.10.3",
     "react-native-keyboard-aware-scroll-view": "^0.9.4",
     "react-native-paper": "^4.9.1",
+    "react-native-range-slider": "^0.1.2",
+    "react-native-range-slider-expo": "^1.4.0",
     "react-native-reanimated": "^2.2.0",
     "react-native-render-html": "^6.1.0",
     "react-native-root-toast": "3.2.1",
@@ -43,13 +47,19 @@
     "react-native-toast-message": "^1.4.9",
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12",
+    "react-native-webview": "11.6.2",
+    "rn-range-slider": "^2.1.1",
     "split-on-first": "^3.0.0",
     "split-string": "^6.1.0",
     "stripe-client": "^1.1.5",
+    "styled-components": "^5.3.3",
     "yup": "^0.32.9"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0"
+    "@babel/core": "^7.9.0",
+    "babel": "^6.23.0",
+    "babel-jest": "^27.3.1",
+    "react-test-renderer": "^17.0.2"
   },
   "private": true
 }

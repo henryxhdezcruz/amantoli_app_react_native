@@ -18,6 +18,7 @@ export default function Orders() {
     useCallback(() => {
       (async () => {
         const response = await getOrdersApi(auth);
+        console.log(response);
         setOrders(response);
       })();
     }, [])

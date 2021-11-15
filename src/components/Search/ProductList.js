@@ -1,21 +1,14 @@
 import React from "react";
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  Text,
-  Image,
-  TouchableWithoutFeedback,
-} from "react-native";
-import { Button } from "react-native-paper";
+import { StyleSheet, View, ScrollView, Text, Image, TouchableWithoutFeedback} from "react-native";
+import { Button, Divider } from "react-native-paper";
 import { map } from "lodash";
 import { useNavigation } from "@react-navigation/native";
-import { API_URL } from "../../utils/constants";
 import colors from "../../styles/colors";
+import SearchFilter from "./SearchFilter";
 
 export default function ProductList(props) {
 
-  const { products } = props;
+  const { products, search, min_price, max_price, index_category, index_brand } = props;
 
   const navigation = useNavigation();
 
@@ -28,12 +21,19 @@ export default function ProductList(props) {
 
   const goToProduct = (id) => {
     navigation.push("product", { idProduct: id });
-    //console.log("Cargar produco >");
   };
+
+  const arr = map(products, "product_name");
 
   return (
     <ScrollView style={styles.container}>
-      <Text style={styles.title}>RESULTADOS</Text>
+
+      <SearchFilter search={search} min_price={min_price} max_price={max_price} index_category={index_category} index_brand={index_brand} />
+
+      <Text style={styles.textResult}>Resultados de búsqueda: {arr.length}</Text>
+
+      <Divider style={{marginVertical:8}}/>
+
       {map(products, (product) => (
         <TouchableWithoutFeedback
           key={product.product_id}
@@ -73,18 +73,14 @@ export default function ProductList(props) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 15,
-    paddingHorizontal: 15,
-  },
-  title: {
-    fontWeight: "bold",
-    fontSize: 19,
-    marginBottom: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 2,
   },
   product: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginTop: 15,
+    marginVertical: 5,
+    marginHorizontal: 10,
     borderRadius: 5,
     borderWidth: 0.5,
     borderColor: "#dadde1",
@@ -112,7 +108,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   currentPrice: {
-    fontSize: 22,
+    fontSize: 18,
   },
   oldPrice: {
     marginLeft: 7,
@@ -126,4 +122,8 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
   },
+  textResult:{
+    fontSize: 16,
+    paddingLeft: 10
+  }
 });
